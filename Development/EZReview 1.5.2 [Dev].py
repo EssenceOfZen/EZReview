@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  untitled.py
+#  EZReview.py
 #  
-#  Copyright 2012 ZenOokami <zenookami@ubuntu>
+#  Copyright 2012 ZenOokami <zenookami@hotmail.com> https://www.essenceofzen.tk/
 #  
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,8 +45,6 @@ print("#=======================================#")
 
 import time
 import datetime
-
-
 #================================
 #Global Variables
 #================================
@@ -59,6 +57,7 @@ switch = 0
 
 file_name = ""
 app_name = ""
+reviewer = ""
 
 usability = 0
 reliability = 0 
@@ -68,20 +67,36 @@ tilt = 0
 
 score = 0
 
+description = ""
+
+pros = ""
+cons = ""
+
+
+final_opinion = ""
+
 def calculate_score(usability, reliability, asthetics, quality, tilt):
-	global score
 	score = (usability + reliability + asthetics + quality + tilt) / 5
 	
-	print(score)
 	return score
 
-
-def main():
+def current_date():
 	today = time.asctime(time.localtime(time.time()))
 	
+	return today
+	
+def name_file():
 	file_name = input("Please input Title: ")
+	print("The name of the file has been set to: " + str(file_name))
+	
+	return file_name
+	
+def name_app():
 	app_name = input("Please input name of application: ")
 	
+	return app_name
+	
+def rate_usability():
 	switch = 1
 	while switch == 1:
 		usability = float(input("Please input Usability score: "))
@@ -90,7 +105,9 @@ def main():
 		else:
 			switch = 0
 			
-			
+	return usability
+
+def rate_reliability():
 	switch = 1
 	while switch == 1:
 		reliability = float(input("Please input Reliability score: "))
@@ -98,7 +115,10 @@ def main():
 			print("Invalid input, score must be 0 to 5.")
 		else:
 			switch = 0
-		
+			
+	return reliability
+	
+def rate_asthetics():
 	switch = 1
 	while switch == 1:
 		asthetics = float(input("Please input Asthetics score: "))
@@ -107,6 +127,9 @@ def main():
 		else:
 			switch = 0
 			
+	return asthetics
+	
+def rate_quality():
 	switch = 1
 	while switch == 1:
 		quality = float(input("Please input Quality score: "))
@@ -115,6 +138,9 @@ def main():
 		else:
 			switch = 0
 			
+	return quality
+	
+def set_tilt():
 	switch = 1
 	while switch == 1:
 		tilt = float(input("Please input your Tilt score: "))
@@ -122,14 +148,30 @@ def main():
 			print("Invalid input, score must be 0 to 5.")
 		else:
 			switch = 0
+			
+	return tilt
 
+def set_description():
+	description = input("Please describe your interaction with the app: ")
 	
-	calculate_score(usability, reliability, asthetics, quality, tilt)
+	return description
 	
+def set_pros():
+	pros = input("What are the pros of this application?: ")
 	
-	#print(score) #testing to see if the variable changed globally instead of locally
+	return pros
 	
-	#Start file writing
+def set_cons():
+	cons = input("What are the cons of this application?: ")
+	
+	return cons
+
+def set_reviewer():
+	reviewer = input("Who is reviewing this program?: ")
+	
+	return reviewer
+
+def write_to_text_file(today, file_name, app_name, usability, reliability, asthetics, quality, tilt, score, pros, cons, description, reviewer):
 	text_file = open(file_name + ".txt", "w")
 	text_file.write("#=======================================#\n")
 	text_file.write("#            ZenOokami Codes            #\n")
@@ -155,6 +197,7 @@ def main():
 	text_file.write("This Text document was created through Essence of Zen \"EZReview Program\". \n")
 	text_file.write("\n")
 	text_file.write("Application: " + app_name + "\n")
+	text_file.write("Reviewed by: " + str(reviewer) + "\n")
 	text_file.write("\n")
 	text_file.write("Usability: " + str(usability) + "\n")
 	text_file.write("Reliability: " + str(reliability) + "\n")
@@ -164,13 +207,44 @@ def main():
 	text_file.write("\n")
 	text_file.write("The overall Score is: " + str(score) + "\n")
 	text_file.write("\n")
+	text_file.write("Description: " + str(description) + "\n")
+	text_file.write("Pros: " + str(pros) + "\n")
+	text_file.write("Cons: " + str(description) + "\n")
+	text_file.write("\n")
 	text_file.write("This review was made on " + today +". With version: " + version + "\n")
 	text_file.close()
 	
 	print("Currently exporting data into a text file...")
 	time.sleep(3)
 	print("Export complete")
+
+def main():
+	today = current_date()
+	
+	file_name = name_file()
+	app_name = name_app()
+	reviewer = set_reviewer()
+	print("")
+		
+	usability = rate_usability()
+	reliability = rate_reliability()
+	asthetics = rate_asthetics()
+	quality = rate_quality()
+	tilt = set_tilt()
+	print("")
+	
+	score = calculate_score(usability, reliability, asthetics, quality, tilt)
+	print("")
+	
+	description = set_description()
+	pros = set_pros()
+	cons = set_cons()
 	
 	
+	write_to_text_file(today, file_name, app_name, usability, reliability, asthetics, quality, tilt, score, pros, cons, description, reviewer)
+	
+
+
+
 
 main()
