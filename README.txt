@@ -7,8 +7,13 @@ Website: Http://www.EssenceOfZen.tk/
 
 [Change Log]
 
+[January 17th, 2013]
+Version: 1.0.1
+
+- Added better input validation checks
+
 
 [December 28th, 2012]
 Version: 1.0.0
 
--Created the program
+- Created the program
